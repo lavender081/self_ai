@@ -178,18 +178,64 @@
             margin: 15px auto 0;
         }
 
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+        /* 轮播样式 */
+        .projects-carousel {
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .carousel-btn:hover {
+            background-color: #4a90e2;
+            color: white;
+        }
+
+        .prev-btn {
+            left: -40px;
+        }
+
+        .next-btn {
+            right: -40px;
+        }
+
+        .carousel-container {
+            overflow: hidden;
+            flex: 1;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
         }
 
         .project-card {
+            flex: 0 0 calc(33.333% - 20px);
             background-color: #ffffff;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin: 0 10px;
+            position: relative;
         }
 
         .project-card:hover {
@@ -197,54 +243,43 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
 
-        .project-image {
-            width: 100%;
-            height: 200px;
-            background-color: #f5f5f5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            color: #999;
+        .project-number {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4a90e2;
+            opacity: 0.1;
         }
 
         .project-content {
-            padding: 20px;
+            padding: 25px 15px;
         }
 
         .project-content h3 {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: #000;
         }
 
         .project-meta {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #888;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .project-description {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: #666;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-
-        .tech-tags {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            line-height: 1.4;
         }
 
         .tech-tags span {
-            display: inline-block;
-            margin-right: 8px;
-            margin-bottom: 8px;
-            padding: 4px 12px;
-            background-color: #e6f0fa;
-            color: #4a90e2;
-            border-radius: 12px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
+            padding: 3px 10px;
         }
 
         .project-link {
@@ -257,6 +292,28 @@
 
         .project-link:hover {
             text-decoration: underline;
+        }
+
+        /* 轮播指示器 */
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator.active {
+            background-color: #4a90e2;
+            transform: scale(1.2);
         }
 
         /* 经历时间轴模块 */
@@ -392,95 +449,113 @@
         </div>
     </section>
 
-    <!-- 核心项目成果模块 -->
+    <!-- 项目成果模块 -->
     <section class="projects-section">
-        <h2 class="section-title">核心项目成果</h2>
+        <h2 class="section-title">项目成果</h2>
         
-        <div class="projects-grid">
-            <div class="project-card">
-                <div class="project-image">综合能源管理系统</div>
-                <div class="project-content">
-                    <h3>综合能源管理系统</h3>
-                    <div class="project-meta">2025-04 至今 | 产品经理</div>
-                    <p class="project-description">以轻量、易用、生态化为核心，聚焦中小建筑普惠市场，打造SaaS化轻量级能源管理服务，破解中小客户能源管理高成本、低效率的行业痛点</p>
-                    <div class="tech-tags">
-                        <span>产品从0-1</span>
-                        <span>AIOT</span>
-                        <span>能源管理</span>
-                        <span>SaaS产品设计</span>
-                        <span>行业解决方案</span>
+        <div class="projects-carousel">
+            <button class="carousel-btn prev-btn">
+                <span>←</span>
+            </button>
+            
+            <div class="carousel-container">
+                <div class="carousel-track">
+                    <div class="project-card">
+                        <div class="project-number">01</div>
+                        <div class="project-content">
+                            <h3>综合能源管理系统</h3>
+                            <div class="project-meta">2025-04 至今 | 产品经理</div>
+                            <p class="project-description">以轻量、易用、生态化为核心，聚焦中小建筑普惠市场，打造SaaS化轻量级能源管理服务，破解中小客户能源管理高成本、低效率的行业痛点</p>
+                            <div class="tech-tags">
+                                <span>产品从0-1</span>
+                                <span>AIOT</span>
+                                <span>能源管理</span>
+                                <span>SaaS产品设计</span>
+                                <span>行业解决方案</span>
+                            </div>
+                            <a href="#" class="project-link">查看详情 →</a>
+                        </div>
                     </div>
-                    <a href="#" class="project-link">查看详情 →</a>
+                    
+                    <div class="project-card">
+                        <div class="project-number">02</div>
+                        <div class="project-content">
+                            <h3>微度医疗CRM优化项目</h3>
+                            <div class="project-meta">2025-01 至 2025-03 | 客户成功项目经理</div>
+                            <p class="project-description">为医疗企业搭建标准化销售管理体系，打通线索-商机-订单全业务链条，构建数据可视化看板，助力客户提升销售管理效率与转化能力</p>
+                            <div class="tech-tags">
+                                <span>ToB SaaS</span>
+                                <span>CRM</span>
+                                <span>项目全流程交付</span>
+                                <span>售前支持</span>
+                                <span>客户成功</span>
+                            </div>
+                            <a href="#" class="project-link">查看详情 →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <div class="project-number">03</div>
+                        <div class="project-content">
+                            <h3>智慧监管云中心项目</h3>
+                            <div class="project-meta">2021-04 至 2024-06 | 项目经理</div>
+                            <p class="project-description">构建大数据驱动的市场监管一体化平台，覆盖市场监管全业务场景，实现全流程智慧化监管、风险预警与决策支撑</p>
+                            <div class="tech-tags">
+                                <span>政务信息化</span>
+                                <span>项目全生命周期管理</span>
+                                <span>国产化改造</span>
+                                <span>团队管理</span>
+                                <span>智慧监管</span>
+                            </div>
+                            <a href="#" class="project-link">查看详情 →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <div class="project-number">04</div>
+                        <div class="project-content">
+                            <h3>国家市场监管总局项目</h3>
+                            <div class="project-meta">2020-08 至 2021-03 | 产品经理</div>
+                            <p class="project-description">搭建国家级市场智慧监管中枢，实现全国市场监管业务数据总览、重点领域态势监测、风险预警与决策支撑能力升级</p>
+                            <div class="tech-tags">
+                                <span>国家级政务项目</span>
+                                <span>需求管理</span>
+                                <span>产品设计</span>
+                                <span>跨部门协调</span>
+                                <span>大数据可视化</span>
+                            </div>
+                            <a href="#" class="project-link">查看详情 →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <div class="project-number">05</div>
+                        <div class="project-content">
+                            <h3>河北省市场监管局项目</h3>
+                            <div class="project-meta">2019-12 至 2020-07 | 售前解决方案负责人</div>
+                            <p class="project-description">包含省-市-县三级应急指挥平台建设、全省市场监管信息化顶层设计两大核心板块，全面提升省级市场监管执法预警、应急处置与信息化统筹能力</p>
+                            <div class="tech-tags">
+                                <span>政务售前</span>
+                                <span>解决方案</span>
+                                <span>高层宣讲</span>
+                                <span>顶层设计</span>
+                                <span>应急指挥平台</span>
+                            </div>
+                            <a href="#" class="project-link">查看详情 →</a>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <div class="project-card">
-                <div class="project-image">微度医疗CRM优化项目</div>
-                <div class="project-content">
-                    <h3>微度医疗CRM优化项目</h3>
-                    <div class="project-meta">2025-01 至 2025-03 | 客户成功项目经理</div>
-                    <p class="project-description">为医疗企业搭建标准化销售管理体系，打通线索-商机-订单全业务链条，构建数据可视化看板，助力客户提升销售管理效率与转化能力</p>
-                    <div class="tech-tags">
-                        <span>ToB SaaS</span>
-                        <span>CRM</span>
-                        <span>项目全流程交付</span>
-                        <span>售前支持</span>
-                        <span>客户成功</span>
-                    </div>
-                    <a href="#" class="project-link">查看详情 →</a>
-                </div>
-            </div>
-            
-            <div class="project-card">
-                <div class="project-image">智慧监管云中心项目</div>
-                <div class="project-content">
-                    <h3>智慧监管云中心项目</h3>
-                    <div class="project-meta">2021-04 至 2024-06 | 项目经理</div>
-                    <p class="project-description">构建大数据驱动的市场监管一体化平台，覆盖市场监管全业务场景，实现全流程智慧化监管、风险预警与决策支撑</p>
-                    <div class="tech-tags">
-                        <span>政务信息化</span>
-                        <span>项目全生命周期管理</span>
-                        <span>国产化改造</span>
-                        <span>团队管理</span>
-                        <span>智慧监管</span>
-                    </div>
-                    <a href="#" class="project-link">查看详情 →</a>
-                </div>
-            </div>
-            
-            <div class="project-card">
-                <div class="project-image">国家市场监管总局项目</div>
-                <div class="project-content">
-                    <h3>国家市场监管总局项目</h3>
-                    <div class="project-meta">2020-08 至 2021-03 | 产品经理</div>
-                    <p class="project-description">搭建国家级市场智慧监管中枢，实现全国市场监管业务数据总览、重点领域态势监测、风险预警与决策支撑能力升级</p>
-                    <div class="tech-tags">
-                        <span>国家级政务项目</span>
-                        <span>需求管理</span>
-                        <span>产品设计</span>
-                        <span>跨部门协调</span>
-                        <span>大数据可视化</span>
-                    </div>
-                    <a href="#" class="project-link">查看详情 →</a>
-                </div>
-            </div>
-            
-            <div class="project-card">
-                <div class="project-image">河北省市场监管局项目</div>
-                <div class="project-content">
-                    <h3>河北省市场监管局项目</h3>
-                    <div class="project-meta">2019-12 至 2020-07 | 售前解决方案负责人</div>
-                    <p class="project-description">包含省-市-县三级应急指挥平台建设、全省市场监管信息化顶层设计两大核心板块，全面提升省级市场监管执法预警、应急处置与信息化统筹能力</p>
-                    <div class="tech-tags">
-                        <span>政务售前</span>
-                        <span>解决方案</span>
-                        <span>高层宣讲</span>
-                        <span>顶层设计</span>
-                        <span>应急指挥平台</span>
-                    </div>
-                    <a href="#" class="project-link">查看详情 →</a>
-                </div>
-            </div>
+            <button class="carousel-btn next-btn">
+                <span>→</span>
+            </button>
+        </div>
+        
+        <div class="carousel-indicators">
+            <span class="indicator active" data-index="0"></span>
+            <span class="indicator" data-index="1"></span>
+            <span class="indicator" data-index="2"></span>
         </div>
     </section>
 
@@ -594,6 +669,57 @@
             if (e.key === 'Enter') {
                 sendMessage();
             }
+        });
+
+        // 轮播功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const track = document.querySelector('.carousel-track');
+            const cards = document.querySelectorAll('.project-card');
+            const prevBtn = document.querySelector('.prev-btn');
+            const nextBtn = document.querySelector('.next-btn');
+            const indicators = document.querySelectorAll('.indicator');
+            
+            let currentIndex = 0;
+            const cardWidth = cards[0].offsetWidth + 20; // 卡片宽度 + 左右margin
+            const visibleCards = 3;
+            const maxIndex = cards.length - visibleCards;
+            
+            function updateCarousel() {
+                track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+                
+                // 更新指示器
+                indicators.forEach((indicator, index) => {
+                    if (index === currentIndex) {
+                        indicator.classList.add('active');
+                    } else {
+                        indicator.classList.remove('active');
+                    }
+                });
+            }
+            
+            // 下一张
+            nextBtn.addEventListener('click', function() {
+                if (currentIndex < maxIndex) {
+                    currentIndex++;
+                    updateCarousel();
+                }
+            });
+            
+            // 上一张
+            prevBtn.addEventListener('click', function() {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    updateCarousel();
+                }
+            });
+            
+            // 指示器点击
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', function() {
+                    currentIndex = Math.min(index, maxIndex);
+                    updateCarousel();
+                });
+            });
         });
     </script>
 </body>
