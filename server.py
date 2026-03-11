@@ -1,10 +1,19 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import requests
 import os
 
 app = Flask(__name__)
 CORS(app)  # 启用CORS
+
+# 提供静态文件服务
+@app.route('/')
+def index():
+    return send_from_directory('.', 'index.html')
+
+@app.route('/<path:path>')
+def static_file(path):
+    return send_from_directory('.', path)
 
 # 模型配置
 model_config = {
@@ -14,17 +23,30 @@ model_config = {
 }
 
 # 系统提示词
-system_prompt = '''你是Lavender的数字分身，一个AI助手。请根据以下信息回答用户的问题：
+system_prompt = '''你是Lavender的数字分身，用来在个人主页里回答访客关于Lavender的问题。
+
+你的任务：
+- 介绍Lavender是谁
+- 回答和Lavender有关的问题
+- 帮访客了解Lavender最近在做什么、做过什么、怎么联系她
 
 关于Lavender：
-- 名字：Lavender
-- 身份：产品经理，正在学习AI
-- 目前在做：整理数字分身的资料，搭建个人主页，整理作品集
-- 兴趣：阅读，喜欢历史
-- 擅长方向：产品设计、项目管理、解决方案输出
-- 别人最可能问的问题：你做过什么？以后想要做什么？如何联系你？
+- Lavender是一个正在学习AI的业务人员，希望通过AI给自己的产品管理、项目管理、解决方案等工作内容进行赋能
+- Lavender最近在做：用AI搭建个人数字页面
+- Lavender擅长或长期关注：比较擅长业务知识学习整合，把复杂问题讲清楚，也比较关注AI应用方向
 
-请以Lavender的数字分身身份回答问题，保持语气友好、专业，提供准确的信息。'''
+说话方式：
+- 语气：专业
+- 回答尽量：简洁 / 真诚 / 人话一点 / 不装专家
+
+边界：
+- 不要编造Lavender没做过的经历
+- 不要假装知道Lavender没提供的信息
+- 不知道时要明确说不知道，并建议访客通过联系方式进一步确认
+
+联系方式：17816872286@163.com
+
+请以Lavender的数字分身身份回答问题，保持语气专业、简洁、真诚，提供准确的信息。'''
 
 @app.route('/api/chat', methods=['POST'])
 def chat():
@@ -85,4 +107,4 @@ def chat():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(port=3001, debug=True)
+    app.run(host='0.0.0.0', port=3001, debug=True)

@@ -704,8 +704,8 @@
                 </div>
                 <div class="chat-messages" id="chatMessages">
                     <div class="message bot-message">
-                        你好！我是 Lavender 的数字分身，你可以问我关于我的职业经历、项目成果、行业见解，也可以直接获取我的完整简历～
-                    </div>
+                    你好！我是 Lavender 的数字分身。Lavender 是一位正在学习 AI 的业务人员，希望通过 AI 给自己的产品管理、项目管理、解决方案等工作内容进行赋能。最近在使用 AI 搭建个人数字页面。Lavender 擅长业务知识学习整合，把复杂问题讲清楚，也比较关注 AI 应用方向。你可以问我关于 Lavender 的问题，了解她的工作经历、项目成果，或者如何联系她。
+                </div>
                 </div>
                 <div class="chat-input">
                     <input type="text" id="userInput" placeholder="输入你的问题..." autocomplete="off">
@@ -885,7 +885,7 @@
                     console.log('消息内容:', message);
                     
                     // 调用后端API
-                    const response = await fetch('http://localhost:3001/api/chat', {
+                    const response = await fetch('http://192.168.1.19:3001/api/chat', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
