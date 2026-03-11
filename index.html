@@ -11,102 +11,133 @@
             box-sizing: border-box;
         }
 
+        /* 全局样式 */
+        :root {
+            --primary-color: #165DFF;
+            --dark-gray: #333333;
+            --medium-gray: #666666;
+            --light-gray: #f5f7fa;
+            --white: #ffffff;
+        }
+
         body {
             font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
             line-height: 1.6;
-            color: #333;
-            background-color: #f8f9fa;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 60px 20px;
+            color: var(--dark-gray);
+            background-color: var(--light-gray);
+            margin: 0;
+            padding: 60px 8%;
         }
 
         /* 个人介绍和数字分身聊天合并模块 */
         .hero-chat-section {
             display: flex;
-            gap: 40px;
+            gap: 32px;
             margin-bottom: 80px;
-            padding: 40px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            align-items: flex-start;
+            align-items: stretch;
         }
 
+        /* 左侧个人简介卡片 */
         .hero-content {
-            flex: 1;
-            min-width: 300px;
+            flex: 6;
+            padding: 40px;
+            background-color: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
         .avatar {
-            width: 120px;
-            height: 120px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            margin-bottom: 30px;
+            margin-bottom: 24px;
             object-fit: cover;
-            border: 3px solid #4a90e2;
-            box-shadow: 0 0 20px rgba(74, 144, 226, 0.3);
+            border: 2px solid var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .hero-content h1 {
-            font-size: 2.5rem;
+            font-size: 32px;
             font-weight: 700;
-            margin-bottom: 20px;
-            color: #000;
+            margin-bottom: 16px;
+            color: #000000;
+            line-height: 1.2;
         }
 
         .hero-content .tagline {
-            font-size: 1.2rem;
-            color: #4a90e2;
-            margin-bottom: 15px;
+            font-size: 20px;
             font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--primary-color);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .hero-content .description {
-            font-size: 1rem;
-            color: #666;
-            margin-bottom: 20px;
+            font-size: 16px;
+            font-weight: 400;
+            margin-bottom: 24px;
+            color: var(--dark-gray);
+            line-height: 1.6;
         }
 
         .contact-info {
-            margin-bottom: 40px;
-            font-size: 0.9rem;
-            color: #666;
+            margin-bottom: 0;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-icon {
+            font-size: 16px;
         }
 
         .contact-info a {
-            color: #4a90e2;
+            font-size: 14px;
+            color: var(--primary-color);
             text-decoration: none;
+            transition: all 0.3s ease;
         }
 
         .contact-info a:hover {
             text-decoration: underline;
         }
 
-        /* 聊天区域 */
+        /* 右侧数字分身聊天卡片 */
         .chat-container {
-            flex: 1;
-            border: 1px solid #e0e0e0;
-            border-radius: 12px;
+            flex: 4;
+            border-radius: 16px;
             overflow: hidden;
-            min-width: 400px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            background-color: var(--white);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex: 1;
+            min-height: 300px;
+            padding: 24px;
+            overflow-y: auto;
+            background-color: var(--white);
         }
 
         .chat-header {
-            background: linear-gradient(90deg, #4a90e2 0%, #357abd 100%);
-            padding: 15px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            font-weight: 600;
-            color: white;
+            width: 100%;
+            background-color: var(--primary-color);
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+            padding: 16px 24px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
-        .chat-header::before {
-            content: '';
+        .status-indicator {
             width: 10px;
             height: 10px;
             border-radius: 50%;
@@ -120,76 +151,71 @@
             100% { opacity: 1; }
         }
 
+        .header-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--white);
+        }
+
         .chat-messages {
             height: 300px;
-            padding: 20px;
+            padding: 24px;
             overflow-y: auto;
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: var(--white);
         }
 
         .message {
             margin-bottom: 15px;
             max-width: 80%;
-            padding: 12px 16px;
-            border-radius: 18px;
-            position: relative;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            padding: 16px;
+            border-radius: 12px;
+            background-color: var(--light-gray);
         }
 
         .bot-message {
-            background-color: #f0f4f8;
-            align-self: flex-start;
-            border-bottom-left-radius: 4px;
-        }
-
-        .user-message {
-            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
-            color: white;
-            margin-left: auto;
-            align-self: flex-end;
-            border-bottom-right-radius: 4px;
+            color: var(--dark-gray);
+            font-size: 15px;
+            line-height: 1.6;
         }
 
         .chat-input {
             display: flex;
-            padding: 15px;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-            background-color: white;
+            padding: 0 24px 24px;
+            align-items: flex-end;
+            gap: 12px;
         }
 
         .chat-input input {
             flex: 1;
             padding: 12px 16px;
-            border: 1px solid #e0e0e0;
+            border: 1px solid #e5e7eb;
             border-radius: 24px;
+            font-size: 14px;
             font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-            background-color: #f8f9fa;
             transition: all 0.3s ease;
         }
 
         .chat-input input:focus {
             outline: none;
-            border-color: #4a90e2;
-            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
-            background-color: white;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(22, 93, 255, 0.1);
         }
 
         .chat-input button {
-            padding: 0 20px;
-            margin-left: 10px;
-            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
-            color: white;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: var(--white);
             border: none;
             border-radius: 24px;
+            font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
             font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(74, 144, 226, 0.3);
         }
 
         .chat-input button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(74, 144, 226, 0.4);
+            opacity: 0.9;
         }
 
         /* 滚动条样式 */
@@ -209,6 +235,56 @@
 
         .chat-messages::-webkit-scrollbar-thumb:hover {
             background: #a1a1a1;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1200px) {
+            .hero-chat-section {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 24px;
+            }
+
+            .hero-content,
+            .chat-container {
+                width: 100%;
+                flex: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 40px 5%;
+            }
+
+            .hero-content,
+            .chat-container {
+                padding: 30px;
+            }
+
+            .hero-content h1 {
+                font-size: 28px;
+            }
+
+            .hero-content .tagline {
+                font-size: 18px;
+                white-space: normal;
+                overflow: visible;
+                text-overflow: clip;
+            }
+
+            .hero-content .description {
+                font-size: 14px;
+            }
+
+            .chat-messages {
+                height: 250px;
+                padding: 20px;
+            }
+
+            .chat-input {
+                padding: 0 20px 20px;
+            }
         }
 
         /* 项目成果模块 */
@@ -561,20 +637,29 @@
 <body>
     <!-- 个人介绍和数字分身聊天合并模块 -->
     <section class="hero-chat-section">
+        <!-- 左侧个人简介卡片 -->
         <div class="hero-content">
             <img src="https://miaoduo.fbcontent.cn/private/resource/image/0ef4583e-947d-4aed-90b1-3b09c308890a.png" alt="Lavender" class="avatar">
             <h1>你好，我是 Lavender</h1>
-            <p class="tagline">AI学习者| 业务赋能者</p>
-            <p class="description">专注于产品设计、项目管理和解决方案输出</p>
+            <p class="tagline">7 年 ToB 产品专家 | 能源管理 / 政务信息化领域 | 千万级项目落地经验</p>
+            <p class="description">深耕能源管理、智慧政务、SaaS 产品领域，擅长从 0 到 1 产品落地、全生命周期项目管理与行业解决方案输出</p>
             <div class="contact-info">
-                邮箱：<a href="mailto:17816872286@163.com">17816872286@163.com</a>
+                <div class="contact-item">
+                    <span class="contact-icon">📧</span>
+                    <a href="mailto:17816872286@163.com">17816872286@163.com</a>
+                </div>
             </div>
         </div>
+        
+        <!-- 右侧数字分身聊天卡片 -->
         <div class="chat-container">
-            <div class="chat-header">数字分身聊天</div>
+            <div class="chat-header">
+                <span class="status-indicator"></span>
+                <span class="header-title">数字分身聊天</span>
+            </div>
             <div class="chat-messages" id="chatMessages">
                 <div class="message bot-message">
-                    你好！我是Lavender的数字分身。有什么可以帮你的吗？你可以问我关于Lavender的职业、作品或联系方式等问题。
+                    你好！我是 Lavender 的数字分身，你可以问我关于我的职业经历、项目成果、行业见解，也可以直接获取我的完整简历～
                 </div>
             </div>
             <div class="chat-input">
