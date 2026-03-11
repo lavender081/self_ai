@@ -212,26 +212,31 @@
         }
 
         /* 项目成果模块 */
-        .projects-section {
-            margin-bottom: 80px;
-        }
-
         .section-title {
-            font-size: 1.8rem;
-            font-weight: 600;
+            font-size: 2.2rem;
+            font-weight: 700;
             margin-bottom: 40px;
             color: #000;
             text-align: center;
             position: relative;
+            padding-bottom: 20px;
         }
 
         .section-title::after {
             content: '';
             display: block;
-            width: 60px;
-            height: 3px;
+            width: 100px;
+            height: 4px;
             background-color: #4a90e2;
             margin: 15px auto 0;
+        }
+
+        .projects-section {
+            margin-bottom: 80px;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
         /* 轮播样式 */
@@ -314,40 +319,57 @@
         }
 
         .project-content h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 1.3rem;
+            font-weight: 700;
             margin-bottom: 8px;
             color: #000;
+            line-height: 1.3;
         }
 
         .project-meta {
-            font-size: 0.85rem;
-            color: #888;
-            margin-bottom: 12px;
+            font-size: 0.8rem;
+            color: #999;
+            margin-bottom: 15px;
         }
 
         .project-description {
             font-size: 0.9rem;
             color: #666;
-            margin-bottom: 15px;
-            line-height: 1.4;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .tech-tags {
+            margin-bottom: 20px;
         }
 
         .tech-tags span {
+            display: inline-block;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            padding: 4px 12px;
+            background-color: #f0f4f8;
+            color: #4a90e2;
+            border-radius: 16px;
             font-size: 0.75rem;
-            padding: 3px 10px;
         }
 
         .project-link {
             display: inline-block;
             color: #4a90e2;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
+            padding: 8px 16px;
+            border: 1px solid #4a90e2;
+            border-radius: 20px;
+            transition: all 0.3s ease;
         }
 
         .project-link:hover {
-            text-decoration: underline;
+            background-color: #4a90e2;
+            color: white;
+            text-decoration: none;
         }
 
         /* 轮播指示器 */
@@ -372,63 +394,108 @@
             transform: scale(1.2);
         }
 
-        /* 经历时间轴模块 */
+        /* 工作经历模块 */
         .timeline-section {
             margin-bottom: 80px;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
         .timeline {
             position: relative;
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
         .timeline::before {
             content: '';
             position: absolute;
-            left: 0;
+            left: 20%;
             top: 0;
             bottom: 0;
-            width: 2px;
+            width: 3px;
             background-color: #4a90e2;
         }
 
         .timeline-item {
             position: relative;
-            padding-left: 30px;
-            margin-bottom: 30px;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -5px;
-            top: 5px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: #4a90e2;
+            display: flex;
+            margin-bottom: 50px;
         }
 
         .timeline-date {
-            font-size: 0.9rem;
+            width: 20%;
+            font-size: 1.1rem;
             color: #4a90e2;
-            font-weight: 600;
-            margin-bottom: 5px;
+            font-weight: 700;
+            padding-right: 30px;
+            position: relative;
+        }
+
+        .timeline-date::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 10px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #4a90e2;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px #4a90e2;
+        }
+
+        .timeline-content {
+            width: 80%;
+            padding-left: 30px;
         }
 
         .timeline-content h3 {
             font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 10px;
+            font-weight: 700;
+            margin-bottom: 15px;
             color: #000;
         }
 
-        .timeline-content p {
+        .timeline-content h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 20px 0 10px;
+            color: #333;
+        }
+
+        .timeline-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .timeline-content li {
             font-size: 0.95rem;
             color: #666;
-            line-height: 1.5;
+            line-height: 1.6;
             margin-bottom: 10px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .timeline-content li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #4a90e2;
+            font-weight: bold;
+        }
+
+        .timeline-item:not(:last-child) {
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 40px;
+        }
+
+        .highlight {
+            font-weight: 700;
+            color: #4a90e2;
         }
 
         /* 响应式设计 */
@@ -461,16 +528,28 @@
                 grid-template-columns: 1fr;
             }
 
+            .timeline-item {
+                flex-direction: column;
+            }
+
             .timeline::before {
                 left: 0;
             }
 
-            .timeline-item {
-                padding-left: 25px;
+            .timeline-date {
+                width: 100%;
+                padding-right: 0;
+                margin-bottom: 10px;
             }
 
-            .timeline-item::before {
+            .timeline-date::after {
                 left: -5px;
+                right: auto;
+            }
+
+            .timeline-content {
+                width: 100%;
+                padding-left: 25px;
             }
 
             .chat-messages {
@@ -521,15 +600,14 @@
                         <div class="project-content">
                             <h3>综合能源管理系统</h3>
                             <div class="project-meta">2025-04 至今 | 产品经理</div>
-                            <p class="project-description">以轻量、易用、生态化为核心，聚焦中小建筑普惠市场，打造SaaS化轻量级能源管理服务，破解中小客户能源管理高成本、低效率的行业痛点</p>
+                            <p class="project-description">主导SaaS化轻量级能源管理产品从0到1全流程落地，完成AIOT+集抄+计量收费一体化解决方案设计，输出产品原型并推动研发落地，覆盖中小建筑能源管理全场景</p>
                             <div class="tech-tags">
                                 <span>产品从0-1</span>
                                 <span>AIOT</span>
                                 <span>能源管理</span>
-                                <span>SaaS产品设计</span>
-                                <span>行业解决方案</span>
+                                <span>SaaS 设计</span>
                             </div>
-                            <a href="#" class="project-link">查看详情 →</a>
+                            <a href="#" class="project-link">查看项目详情</a>
                         </div>
                     </div>
                     
@@ -538,66 +616,62 @@
                         <div class="project-content">
                             <h3>微度医疗CRM优化项目</h3>
                             <div class="project-meta">2025-01 至 2025-03 | 客户成功项目经理</div>
-                            <p class="project-description">为医疗企业搭建标准化销售管理体系，打通线索-商机-订单全业务链条，构建数据可视化看板，助力客户提升销售管理效率与转化能力</p>
+                            <p class="project-description">全程主导医疗CRM项目从售前方案、商务签约到落地交付全流程，规范销售全链路流程并搭建数据可视化看板，有效提升客户续费率与销售转化效率</p>
                             <div class="tech-tags">
                                 <span>ToB SaaS</span>
                                 <span>CRM</span>
                                 <span>项目全流程交付</span>
-                                <span>售前支持</span>
                                 <span>客户成功</span>
                             </div>
-                            <a href="#" class="project-link">查看详情 →</a>
+                            <a href="#" class="project-link">查看项目详情</a>
                         </div>
                     </div>
                     
                     <div class="project-card">
                         <div class="project-number">03</div>
                         <div class="project-content">
-                            <h3>智慧监管云中心项目</h3>
+                            <h3>上海市闵行区市场监管局智慧监管云中心项目</h3>
                             <div class="project-meta">2021-04 至 2024-06 | 项目经理</div>
-                            <p class="project-description">构建大数据驱动的市场监管一体化平台，覆盖市场监管全业务场景，实现全流程智慧化监管、风险预警与决策支撑</p>
+                            <p class="project-description">带领10人团队完成智慧监管平台国产化改造及二期全生命周期建设，项目验收金额1500W+，顺利通过验收并获客户高度认可</p>
                             <div class="tech-tags">
                                 <span>政务信息化</span>
                                 <span>项目全生命周期管理</span>
                                 <span>国产化改造</span>
                                 <span>团队管理</span>
-                                <span>智慧监管</span>
                             </div>
-                            <a href="#" class="project-link">查看详情 →</a>
+                            <a href="#" class="project-link">查看项目详情</a>
                         </div>
                     </div>
                     
                     <div class="project-card">
                         <div class="project-number">04</div>
                         <div class="project-content">
-                            <h3>国家市场监管总局项目</h3>
+                            <h3>国家市场监管总局智慧监管中心综合展示建设项目</h3>
                             <div class="project-meta">2020-08 至 2021-03 | 产品经理</div>
-                            <p class="project-description">搭建国家级市场智慧监管中枢，实现全国市场监管业务数据总览、重点领域态势监测、风险预警与决策支撑能力升级</p>
+                            <p class="project-description">统筹国家级政务项目团队管理与跨部门需求协调，完成5大业务局全量需求梳理、产品原型设计，推动国家级智慧监管中枢产品顺利上线</p>
                             <div class="tech-tags">
                                 <span>国家级政务项目</span>
                                 <span>需求管理</span>
                                 <span>产品设计</span>
                                 <span>跨部门协调</span>
-                                <span>大数据可视化</span>
                             </div>
-                            <a href="#" class="project-link">查看详情 →</a>
+                            <a href="#" class="project-link">查看项目详情</a>
                         </div>
                     </div>
                     
                     <div class="project-card">
                         <div class="project-number">05</div>
                         <div class="project-content">
-                            <h3>河北省市场监管局项目</h3>
+                            <h3>河北省市场监管局系列信息化项目</h3>
                             <div class="project-meta">2019-12 至 2020-07 | 售前解决方案负责人</div>
-                            <p class="project-description">包含省-市-县三级应急指挥平台建设、全省市场监管信息化顶层设计两大核心板块，全面提升省级市场监管执法预警、应急处置与信息化统筹能力</p>
+                            <p class="project-description">独立完成省级应急指挥平台项目高层宣讲与方案落地，项目验收后实现全省推广；协助完成全省市场监管信息化顶层设计，制定统一建设标准与规范</p>
                             <div class="tech-tags">
                                 <span>政务售前</span>
                                 <span>解决方案</span>
-                                <span>高层宣讲</span>
                                 <span>顶层设计</span>
                                 <span>应急指挥平台</span>
                             </div>
-                            <a href="#" class="project-link">查看详情 →</a>
+                            <a href="#" class="project-link">查看项目详情</a>
                         </div>
                     </div>
                 </div>
@@ -615,19 +689,21 @@
         </div>
     </section>
 
-    <!-- 经历时间轴模块 -->
+    <!-- 工作经历模块 -->
     <section class="timeline-section">
-        <h2 class="section-title">经历时间轴</h2>
+        <h2 class="section-title">工作经历</h2>
         
         <div class="timeline">
             <div class="timeline-item">
                 <div class="timeline-date">2025-04 至今</div>
                 <div class="timeline-content">
                     <h3>杭州基础创新科技有限公司 | 产品经理</h3>
-                    <p>快速完成物联网、电力、水务多领域知识体系搭建，深耕能耗管理、智能配电、碳核算、AIOT场景化应用核心方向</p>
-                    <p>主导建筑能源管理SaaS产品从0到1全流程落地，完成Charter规划、需求调研、原型设计到产研对接全链路管控</p>
-                    <p>推动智能配电产品完成市场调研、竞品分析到原型设计的核心阶段跃迁</p>
-                    <p>配合销售体系完成售前方案输出、技术宣讲及售后落地支撑，输出多套行业定制化解决方案</p>
+                    <ul>
+                        <li>快速完成物联网、电力、水务多领域知识体系搭建，深耕能耗管理、智能配电、碳核算、AIOT场景化应用核心方向</li>
+                        <li>主导建筑能源管理SaaS产品从0到1全流程落地，覆盖Charter规划、需求设计、原型输出到产研对接全链路管控</li>
+                        <li>推动智能配电产品完成市场调研、竞品分析到原型设计的核心阶段跃迁</li>
+                        <li>配合销售体系完成售前方案输出、技术宣讲及售后落地支撑，输出多套行业定制化解决方案</li>
+                    </ul>
                 </div>
             </div>
             
@@ -635,8 +711,10 @@
                 <div class="timeline-date">2024-09 至 2025-03</div>
                 <div class="timeline-content">
                     <h3>纷享销客浙江分公司 | 客户成功项目经理</h3>
-                    <p>深耕ToB SaaS领域，深度挖掘客户业务需求，主导多项目全流程交付，统筹跨部门资源保障项目按期高质量落地</p>
-                    <p>协同客户成功团队完成售前方案输出、需求对接与技术宣讲，助力多个项目顺利签约</p>
+                    <ul>
+                        <li>深耕ToB SaaS领域，深度挖掘客户业务需求，主导多项目全流程交付，统筹跨部门资源保障项目按期高质量落地</li>
+                        <li>协同客户成功团队完成售前方案输出、需求对接与技术宣讲，助力多个项目顺利签约</li>
+                    </ul>
                 </div>
             </div>
             
@@ -644,8 +722,15 @@
                 <div class="timeline-date">2019-04 至 2024-06</div>
                 <div class="timeline-content">
                     <h3>天玑智成（北京）科技有限公司 | 产品经理 → 项目经理/售前解决方案负责人</h3>
-                    <p>2019-04 至 2021-03 产品经理：负责市场监管领域政务项目需求分析与产品设计，全程参与国家级、省级、市级多项目全流程设计与落地推进</p>
-                    <p>2021-04 至 2024-06 项目经理/售前解决方案负责人：带领10人团队完成智慧监管平台国产化改造及二期建设，项目验收金额1500W+，获客户高度认可；主导省、市级市场监管政务项目售前推广，完成解决方案撰写与高层宣讲，推动多项目顺利签单</p>
+                    <h4>2021-04 至 2024-06 | 项目经理/售前解决方案负责人</h4>
+                    <ul>
+                        <li>带领10人团队完成智慧监管平台国产化改造及二期建设，项目验收金额1500W+，获客户高度认可</li>
+                        <li>主导省、市级市场监管政务项目售前推广，完成解决方案撰写与高层宣讲，推动多项目顺利签单</li>
+                    </ul>
+                    <h4>2019-04 至 2021-03 | 产品经理</h4>
+                    <ul>
+                        <li>负责市场监管领域政务项目需求分析与产品设计，全程参与国家级、省级、市级多项目全流程设计与落地推进</li>
+                    </ul>
                 </div>
             </div>
         </div>
