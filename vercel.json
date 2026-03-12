@@ -1,7 +1,7 @@
 {
   "functions": {
-    "api/chat.js": {  // 精准匹配你的Node.js函数文件
-      "runtime": "nodejs@20.x"  // 指定Node.js 20版本（Vercel稳定支持）
+    "api/chat.js": { 
+      "runtime": "nodejs@20.x" 
     }
   }
 }
