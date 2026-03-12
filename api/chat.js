@@ -12,7 +12,7 @@ app.use(express.json());
 // 模型配置
 const modelConfig = {
     url: 'https://dashscope.aliyuncs.com/compatible-mode/v1',
-    apiKey: 'sk-6ffc26d9650f4aa9826ca89d439d67e5',
+    apiKey: 'process.env.DASHSCOPE_API_KEY',
     model: 'qwen3-vl-flash'
 };
 
