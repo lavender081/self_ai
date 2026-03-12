@@ -1170,7 +1170,7 @@
                     console.log('消息内容:', message);
                     
                     // 调用后端API
-                    const response = await fetch('http://192.168.1.19:3001/api/chat', {
+                    const response = await fetch('/api/chat', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
