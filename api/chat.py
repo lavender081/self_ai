@@ -6,21 +6,16 @@ import os
 app = Flask(__name__)
 CORS(app)  # 启用CORS
 
-# 提供静态文件服务
-@app.route('/')
-def index():
-    return send_from_directory('.', 'index.html')
-
-@app.route('/<path:path>')
-def static_file(path):
-    return send_from_directory('.', path)
+# 从环境变量获取API密钥
+api_key = os.environ.get('DASHSCOPE_API_KEY')
 
 # 模型配置
 model_config = {
     'url': 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
-    'api_key': os.environ.get('DASHSCOPE_API_KEY', 'sk-6ffc26d9650f4aa9826ca89d439d67e5'),
+    'api_key': api_key,
     'model': 'qwen3-vl-flash'
 }
+
 
 # 系统提示词
 system_prompt = '''你是Lavender的数字分身，用来在个人主页里回答访客关于Lavender的问题。
