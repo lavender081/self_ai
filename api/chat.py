@@ -2,22 +2,35 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import requests
 import os
+import sys  # 新增：用于终止程序
 
 app = Flask(__name__)
 CORS(app)  # 启用CORS
 
-# 从环境变量获取API密钥
+# 🔴 关键修改1：读取环境变量（移除默认硬编码密钥）
 api_key = os.environ.get('DASHSCOPE_API_KEY')
+# 🔴 关键修改2：启动时校验密钥，缺失则直接报错并终止程序
+if not api_key:
+    print('❌ 错误：未配置 DASHSCOPE_API_KEY 环境变量！请先配置环境变量再启动服务。', file=sys.stderr)
+    sys.exit(1)  # 终止程序，防止无密钥运行
 
-# 模型配置
+# 提供静态文件服务（保持不变）
+@app.route('/')
+def index():
+    return send_from_directory('.', 'index.html')
+
+@app.route('/<path:path>')
+def static_file(path):
+    return send_from_directory('.', path)
+
+# 模型配置（🔴 关键修改3：使用校验后的api_key，无默认值）
 model_config = {
     'url': 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
-    'api_key': api_key,
+    'api_key': api_key,  # 仅使用环境变量的密钥
     'model': 'qwen3-vl-flash'
 }
 
-
-# 系统提示词
+# 系统提示词（保持不变）
 system_prompt = '''你是Lavender的数字分身，用来在个人主页里回答访客关于Lavender的问题。
 
 你的任务：
@@ -52,7 +65,7 @@ def chat():
         if not message:
             return jsonify({'error': '请提供消息内容'}), 400
         
-        # 调用API
+        # 调用API（逻辑保持不变）
         headers = {
             'Content-Type': 'application/json',
             'Authorization': f'Bearer {model_config["api_key"]}'
@@ -102,4 +115,5 @@ def chat():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    app = app
+    # 本地运行时启动服务（保持不变）
+    app.run(host='0.0.0.0', port=3000, debug=False)
