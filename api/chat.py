@@ -2,26 +2,27 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import requests
 import os
-import sys  # 新增：用于终止程序
+import sys
+
+# 获取项目根目录（api目录的父目录）
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 app = Flask(__name__)
-CORS(app)  # 启用CORS
+CORS(app)
 
-# 🔴 关键修改1：读取环境变量（移除默认硬编码密钥）
 api_key = os.environ.get('DASHSCOPE_API_KEY')
-# 🔴 关键修改2：启动时校验密钥，缺失则直接报错并终止程序
 if not api_key:
     print('❌ 错误：未配置 DASHSCOPE_API_KEY 环境变量！请先配置环境变量再启动服务。', file=sys.stderr)
-    sys.exit(1)  # 终止程序，防止无密钥运行
+    sys.exit(1)
 
-# 提供静态文件服务（保持不变）
+# 提供静态文件服务
 @app.route('/')
 def index():
-    return send_from_directory('.', 'index.html')
+    return send_from_directory(BASE_DIR, 'index.html')
 
 @app.route('/<path:path>')
 def static_file(path):
-    return send_from_directory('.', path)
+    return send_from_directory(BASE_DIR, path)
 
 # 模型配置（🔴 关键修改3：使用校验后的api_key，无默认值）
 model_config = {
@@ -114,6 +115,11 @@ def chat():
         print(f'API调用错误: {str(e)}')
         return jsonify({'error': str(e)}), 500
 
+# 支持两种模式：
+# 1. Vercel/EdgeOne Serverless部署：导出app对象
+# 2. 本地运行：直接启动服务器
 if __name__ == '__main__':
-    # 本地运行时启动服务（保持不变）
     app.run(host='0.0.0.0', port=3000, debug=False)
+else:
+    # Serverless模式：导出app供平台使用
+    module = app

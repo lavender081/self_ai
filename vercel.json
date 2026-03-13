@@ -1,7 +1,28 @@
 {
   "functions": {
-    "api/chat.js": {
-      "runtime": "nodejs@20.x"
+    "api/chat.py": {
+      "runtime": "python3.11",
+      "outputDirectory": "api"
     }
-  }
+  },
+  "builds": [
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "api/chat.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/chat.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
 }
