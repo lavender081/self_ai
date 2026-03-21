@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lavender - 个人主页</title>
+    <style>
+        :root {
+            --primary-color: #2563EB;
+            --dark-main: #0F172A;
+            --text-body: #475569;
+            --text-muted: #94A3B8;
+            --bg-body: #F8FAFC;
+            --bg-card: #FFFFFF;
+            --bg-tag: #F1F5F9;
+            --border-light: #E2E8F0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-body);
+            background-color: var(--bg-body);
+            margin: 0;
+            padding: 60px 8%;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        section {
+            margin-bottom: 64px;
+            width: 100%;
+        }
+
+        .card-shadow {
+            background-color: var(--bg-card);
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        .hero-chat-section {
+            display: flex;
+            gap: 24px;
+            align-items: stretch;
+        }
+
+        .hero-content {
+            flex: 1.2;
+            padding: 40px;
+        }
+
+        .avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            margin-bottom: 24px;
+            object-fit: cover;
+            border: 1px solid var(--border-light);
+        }
+
+        .hero-content h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--dark-main);
+            letter-spacing: -0.5px;
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .hero-tags span {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-body);
+            background-color: var(--bg-tag);
+            padding: 4px 14px;
+            border-radius: 99px;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .hero-content .description {
+            font-size: 16px;
+            margin-bottom: 32px;
+        }
+
+        .hero-content .highlight {
+            font-weight: 600;
+            color: var(--dark-main);
+        }
+
+        .basic-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .info-item {
+            font-size: 14px;
+            color: var(--text-body);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-item a {
+            color: var(--text-body);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .info-item a:hover {
+            color: var(--primary-color);
+        }
+
+        .chat-container {
+            flex: 0.8;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+        }
+
+        .chat-header {
+            padding: 20px 24px 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border-light);
+            z-index: 2;
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #10B981;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .header-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--dark-main);
+        }
+
+        .chat-messages {
+            flex: 1;
+            max-height: 400px;
+            padding: 24px;
+            overflow-y: auto;
+            background-color: var(--bg-body);
+        }
+
+        .message {
+            margin-bottom: 16px;
+            max-width: 85%;
+            width: fit-content;
+            padding: 12px 16px;
+            font-size: 14px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-word;
+            text-align: left !important;
+        }
+
+        .bot-message {
+            background-color: var(--bg-tag);
+            color: var(--text-body);
+            border-radius: 4px 16px 16px 16px;
+            margin-right: auto;
+        }
+
+        .user-message {
+            background-color: var(--dark-main);
+            color: white;
+            border-radius: 16px 16px 4px 16px;
+            margin-left: auto;
+        }
+
+        .chat-input {
+            padding: 16px 20px;
+            display: flex;
+            gap: 12px;
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-light);
+            align-items: center;
+        }
+
+        .chat-input input {
+            flex: 1;
+            height: 42px;
+            padding: 0 16px;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            font-size: 14px;
+            background-color: #ffffff;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .chat-input input:focus {
+            border-color: var(--dark-main);
+            box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.1);
+        }
+
+        .chat-input button {
+            height: 42px;
+            padding: 0 20px;
+            background-color: var(--dark-main);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: background 0.2s;
+        }
+
+        .chat-input button:hover {
+            background-color: var(--primary-color);
+        }
+
+        .chat-messages::-webkit-scrollbar { width: 6px; }
+        .chat-messages::-webkit-scrollbar-track { background: transparent; }
+        .chat-messages::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
+        .chat-messages::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 32px;
+            color: var(--dark-main);
+            display: inline-block;
+            border-bottom: 2px solid var(--dark-main);
+            padding-bottom: 8px;
+        }
+
+        .projects-section {
+            padding: 40px;
+        }
+
+        .projects-carousel {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .carousel-container {
+            overflow: hidden;
+            flex: 1;
+            padding: 10px 0;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .project-card {
+            flex: 0 0 calc(33.333% - 20px);
+            background-color: var(--bg-card);
+            border-radius: 12px;
+            border: 1px solid var(--border-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin: 0 10px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-height: 340px;
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
+        }
+
+        .project-number {
+            position: absolute;
+            bottom: 16px;
+            right: 20px;
+            font-size: 40px;
+            font-weight: 800;
+            color: var(--text-muted);
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .project-content {
+            padding: 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            z-index: 1;
+        }
+
+        .project-content h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--dark-main);
+            line-height: 1.4;
+        }
+
+        .project-meta {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .project-description {
+            font-size: 14px;
+            color: var(--text-body);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .tech-tags {
+            margin-bottom: 24px;
+        }
+
+        .tech-tags span {
+            display: inline-block;
+            margin-right: 6px;
+            margin-bottom: 6px;
+            padding: 4px 10px;
+            background-color: var(--bg-tag);
+            color: var(--text-body);
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .project-link {
+            margin-top: auto;
+            align-self: flex-start;
+            display: inline-block;
+            color: var(--text-body);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .project-link:hover {
+            color: var(--primary-color);
+        }
+
+        .project-link-placeholder {
+            display: inline-block;
+            height: 20px;
+            width: 80px;
+        }
+
+        .carousel-btn {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.2s ease;
+            color: var(--text-body);
+        }
+        .carousel-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        .prev-btn { margin-right: 16px; }
+        .next-btn { margin-left: 16px; }
+
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 24px;
+        }
+        .indicator {
+            width: 8px; height: 8px;
+            border-radius: 4px;
+            background-color: var(--border-light);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .indicator.active {
+            width: 24px;
+            background-color: var(--primary-color);
+        }
+
+        .timeline-section {
+            padding: 40px;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 960px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 200px;
+            top: 8px;
+            bottom: 0;
+            width: 1px;
+            background-color: var(--border-light);
+        }
+
+        .timeline-item {
+            position: relative;
+            display: flex;
+            margin-bottom: 48px;
+        }
+
+        .timeline-date {
+            width: 200px;
+            font-size: 14px;
+            color: var(--text-muted);
+            padding-right: 40px;
+            position: relative;
+            text-align: right;
+            padding-top: 2px;
+        }
+
+        .timeline-date::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--bg-card);
+            border: 2px solid var(--border-light);
+            z-index: 2;
+        }
+
+        .timeline-item:first-child .timeline-date {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        .timeline-item:first-child .timeline-date::after {
+            border-color: var(--primary-color);
+            border-width: 3px;
+        }
+
+        .timeline-content {
+            flex: 1;
+            padding-left: 40px;
+        }
+
+        .timeline-content h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--dark-main);
+        }
+
+        .timeline-content h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin: 24px 0 8px;
+            color: var(--text-body);
+        }
+
+        .timeline-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .timeline-content li {
+            font-size: 14px;
+            color: var(--text-body);
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 16px;
+            line-height: 1.6;
+        }
+
+        .timeline-content li::before {
+            content: '-';
+            position: absolute;
+            left: 0;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 24px 16px; }
+            .container { width: 100%; }
+            section { margin-bottom: 40px; }
+
+            .hero-content, .chat-container, .projects-section, .timeline-section {
+                padding: 20px !important;
+                border-radius: 16px;
+            }
+
+            .hero-chat-section {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .avatar { width: 60px; height: 60px; }
+            .hero-content h1 { font-size: 24px; margin-bottom: 12px; }
+            .hero-tags { gap: 8px; margin-bottom: 20px; }
+            .basic-info { padding-top: 16px; gap: 10px; }
+
+            .chat-messages {
+                height: 240px;
+                padding: 16px;
+                box-shadow: inset 0 2px 8px rgba(0,0,0,0.02);
+            }
+
+            .chat-input {
+                padding: 12px 16px;
+                gap: 8px;
+            }
+            .chat-input input {
+                height: 38px;
+            }
+            .chat-input button {
+                height: 38px;
+                padding: 0 16px;
+            }
+
+            .tech-tags span {
+                border-radius: 99px;
+            }
+
+            .projects-carousel { display: block; }
+            .carousel-btn { display: none; }
+            .carousel-track {
+                flex-direction: column;
+                transform: none !important;
+                gap: 20px;
+            }
+            .project-card {
+                flex: none;
+                width: 100%;
+                margin: 0;
+                min-height: auto;
+            }
+            .project-content {
+                min-height: auto !important;
+            }
+            .carousel-indicators { display: none; }
+
+            .timeline::before { left: 6px; }
+            .timeline-item {
+                flex-direction: column;
+                margin-bottom: 32px;
+            }
+            .timeline-date {
+                width: 100%;
+                text-align: left;
+                padding-left: 24px;
+                padding-right: 0;
+                margin-bottom: 4px;
+                font-size: 13px;
+                opacity: 0.8;
+            }
+            .timeline-date::after {
+                left: 1px;
+                right: auto;
+                top: 4px;
+            }
+            .timeline-content {
+                padding-left: 24px;
+                width: 100%;
+            }
+            .timeline-content h3 {
+                font-size: 16px;
+                margin-bottom: 8px;
+                line-height: 1.4;
+            }
+            .timeline-content h4 {
+                font-size: 13px;
+                color: var(--text-muted);
+                margin: 16px 0 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <section class="hero-chat-section">
+            <div class="hero-content card-shadow">
+                <img src="https://miaoduo.fbcontent.cn/private/resource/image/0ef4583e-947d-4aed-90b1-3b09c308890a.png" alt="Lavender" class="avatar">
+                <h1>你好，我是 Lavender</h1>
+
+                <div class="hero-tags">
+                    <span>7年ToB业务专家</span>
+                    <span>能源管理&政务信息化领域</span>
+                    <span>千万级项目落地经验</span>
+                </div>
+
+                <p class="description">深耕能源管理、智慧政务业务领域，擅长从0到1<span class="highlight">产品</span>落地、全生命周期<span class="highlight">项目管理</span>与行业<span class="highlight">解决方案</span>输出</p>
+
+                <div class="basic-info">
+                    <div class="info-item">
+                        <span>👤</span> 女 | 1996-09出生
+                    </div>
+                    <div class="info-item">
+                        <span>📱</span> 17816872286
+                    </div>
+                    <div class="info-item">
+                        <span>✉️</span> <a href="mailto:17816872286@163.com">17816872286@163.com</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-container card-shadow">
+                <div class="chat-header">
+                    <span class="status-indicator"></span>
+                    <span class="header-title">数字分身聊天</span>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message bot-message">你好！我是Lavender的数字分身。关于她的ToB业务经验、项目成果和AI应用能力，你可以随时问我。</div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="userInput" placeholder="输入你的问题..." autocomplete="off">
+                    <button id="sendButton">发送</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="projects-section card-shadow">
+            <h2 class="section-title">项目成果</h2>
+
+            <div class="projects-carousel">
+                <button class="carousel-btn prev-btn">←</button>
+
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="project-card">
+                            <div class="project-number">01</div>
+                            <div class="project-content">
+                                <h3>综合能源管理系统</h3>
+                                <div class="project-meta">2025-04 至今 | 产品经理</div>
+                                <p class="project-description">主导SaaS化轻量级能源管理产品从0到1全流程落地，完成AIOT+集抄+计量收费一体化解决方案设计，输出产品原型并推动研发落地，覆盖中小建筑能源管理全场景</p>
+                                <div class="tech-tags">
+                                    <span>产品从0-1</span>
+                                    <span>AIOT</span>
+                                    <span>能源管理</span>
+                                    <span>SaaS 设计</span>
+                                </div>
+                                <a href="https://a.bbicloud.com/v2/#/index-pc" target="_blank" class="project-link">查看项目详情</a>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-number">02</div>
+                            <div class="project-content">
+                                <h3>微度医疗CRM优化项目</h3>
+                                <div class="project-meta">2025-01 至 2025-03 | 客户成功项目经理</div>
+                                <p class="project-description">全程主导医疗CRM项目从售前方案、商务签约到落地交付全流程，规范销售全链路流程并搭建数据可视化看板，有效提升客户续费率与销售转化效率</p>
+                                <div class="tech-tags">
+                                    <span>ToB SaaS</span>
+                                    <span>CRM</span>
+                                    <span>项目全流程交付</span>
+                                    <span>客户成功</span>
+                                </div>
+                                <a href="https://www.fxiaoke.com/ap/sem?utm_source=%E7%99%BE%E5%BA%A6&utm_medium=bdbrand&utm_term=pz" target="_blank" class="project-link">查看项目详情</a>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-number">03</div>
+                            <div class="project-content">
+                                <h3>上海市闵行区市场监管局智慧监管云中心项目</h3>
+                                <div class="project-meta">2021-04 至 2024-06 | 项目经理</div>
+                                <p class="project-description">带领10人团队完成智慧监管平台国产化改造及二期全生命周期建设，项目验收金额1500W+，顺利通过验收并获客户高度认可</p>
+                                <div class="tech-tags">
+                                    <span>政务信息化</span>
+                                    <span>项目全生命周期管理</span>
+                                    <span>国产化改造</span>
+                                    <span>团队管理</span>
+                                </div>
+                                <a href="https://mp.weixin.qq.com/s/yfIx3DY3BKEgqCRA7I5zdQ" target="_blank" class="project-link">查看项目详情</a>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-number">04</div>
+                            <div class="project-content">
+                                <h3>国家市场监管总局智慧监管中心综合展示建设项目</h3>
+                                <div class="project-meta">2020-08 至 2021-03 | 产品经理</div>
+                                <p class="project-description">统筹国家级政务项目团队管理与跨部门需求协调，完成5大业务局全量需求梳理、产品原型设计，推动国家级智慧监管中枢产品顺利上线</p>
+                                <div class="tech-tags">
+                                    <span>国家级政务项目</span>
+                                    <span>需求管理</span>
+                                    <span>产品设计</span>
+                                    <span>跨部门协调</span>
+                                </div>
+                                <span class="project-link-placeholder"></span>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-number">05</div>
+                            <div class="project-content">
+                                <h3>河北省市场监管局系列信息化项目</h3>
+                                <div class="project-meta">2019-12 至 2020-07 | 售前解决方案负责人</div>
+                                <p class="project-description">独立完成省级应急指挥平台项目高层宣讲与方案落地，项目验收后实现全省推广；协助完成全省市场监管信息化顶层设计，制定统一建设标准与规范</p>
+                                <div class="tech-tags">
+                                    <span>政务售前</span>
+                                    <span>解决方案</span>
+                                    <span>顶层设计</span>
+                                    <span>应急指挥平台</span>
+                                </div>
+                                <span class="project-link-placeholder"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="carousel-btn next-btn">→</button>
+            </div>
+
+            <div class="carousel-indicators">
+                <span class="indicator active" data-index="0"></span>
+                <span class="indicator" data-index="1"></span>
+            </div>
+        </section>
+
+        <section class="timeline-section card-shadow">
+            <h2 class="section-title">工作经历</h2>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">2025-04 至今</div>
+                    <div class="timeline-content">
+                        <h3>杭州基础创新科技有限公司 | 产品经理</h3>
+                        <ul>
+                            <li>快速完成物联网、电力、水务多领域知识体系搭建，深耕能耗管理、智能配电、碳核算、AIOT场景化应用核心方向</li>
+                            <li>主导建筑能源管理SaaS产品从0到1全流程落地，覆盖Charter规划、需求设计、原型输出到产研对接全链路管控</li>
+                            <li>推动智能配电产品完成市场调研、竞品分析到原型设计的核心阶段跃迁</li>
+                            <li>配合销售体系完成售前方案输出、技术宣讲及售后落地支撑，输出多套行业定制化解决方案</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2024-09 至 2025-03</div>
+                    <div class="timeline-content">
+                        <h3>纷享销客浙江分公司 | 客户成功项目经理</h3>
+                        <ul>
+                            <li>深耕ToB SaaS领域，深度挖掘客户业务需求，主导多项目全流程交付，统筹跨部门资源保障项目按期高质量落地</li>
+                            <li>协同客户成功团队完成售前方案输出、需求对接与技术宣讲，助力多个项目顺利签约</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2019-04 至 2024-06</div>
+                    <div class="timeline-content">
+                        <h3>天玑智成（北京）科技有限公司 | 产品经理 → 项目经理/售前解决方案负责人</h3>
+                        <h4>2021-04 至 2024-06 | 项目经理/售前解决方案负责人</h4>
+                        <ul>
+                            <li>带领10人团队完成智慧监管平台国产化改造及二期建设，项目验收金额1500W+，获客户高度认可</li>
+                            <li>主导省、市级市场监管政务项目售前推广，完成解决方案撰写与高层宣讲，推动多项目顺利签单</li>
+                        </ul>
+                        <h4>2019-04 至 2021-03 | 产品经理</h4>
+                        <ul>
+                            <li>负责市场监管领域政务项目需求分析与产品设计，全程参与国家级、省级、市级多项目全流程设计与落地推进</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        async function sendMessage() {
+            const userInput = document.getElementById('userInput');
+            const message = userInput.value.trim();
+
+            if (message) {
+                addMessage(message, 'user');
+                userInput.value = '';
+
+                try {
+                    const loadingMessage = addMessage('正在思考...', 'bot');
+                    const response = await fetch('/api/chat', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ message: message })
+                    });
+
+                    loadingMessage.remove();
+
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => ({}));
+                        throw new Error(`API调用失败: ${response.status} - ${errorData.error || '未知错误'}`);
+                    }
+
+                    const data = await response.json();
+                    if (!data.response) throw new Error('API返回格式错误');
+
+                    addMessage(data.response, 'bot');
+                } catch (error) {
+                    addMessage(`抱歉，我暂时无法回答你的问题。错误信息: ${error.message}`, 'bot');
+                }
+            }
+        }
+
+        function addMessage(text, sender) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            messageDiv.textContent = text;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            return messageDiv;
+        }
+
+        document.getElementById('sendButton').addEventListener('click', sendMessage);
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const track = document.querySelector('.carousel-track');
+            const cards = document.querySelectorAll('.project-card');
+            const prevBtn = document.querySelector('.prev-btn');
+            const nextBtn = document.querySelector('.next-btn');
+            const indicators = document.querySelectorAll('.indicator');
+
+            if(window.innerWidth <= 768) return;
+
+            let currentIndex = 0;
+            const maxIndex = 1;
+
+            function updateCarousel() {
+                const cardWidth = cards[0].offsetWidth + 20;
+                const offset = currentIndex === 0 ? 0 : cardWidth * 3;
+                track.style.transform = `translateX(-${offset}px)`;
+
+                indicators.forEach((indicator, index) => {
+                    if (index === currentIndex) indicator.classList.add('active');
+                    else indicator.classList.remove('active');
+                });
+            }
+
+            if(nextBtn) {
+                nextBtn.addEventListener('click', function() {
+                    if (currentIndex < maxIndex) {
+                        currentIndex++;
+                        updateCarousel();
+                    }
+                });
+            }
+
+            if(prevBtn) {
+                prevBtn.addEventListener('click', function() {
+                    if (currentIndex > 0) {
+                        currentIndex--;
+                        updateCarousel();
+                    }
+                });
+            }
+
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', function() {
+                    currentIndex = Math.min(index, maxIndex);
+                    updateCarousel();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "lavender-personal-site",
+  "version": "1.0.0",
+  "description": "Lavender 个人主页 - 数字分身聊天",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "node-fetch": "^2.7.0"
+  }
+}
