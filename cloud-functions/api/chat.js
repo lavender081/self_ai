@@ -24,43 +24,43 @@ const SYSTEM_PROMPT = `你是Lavender的专属数字分身，负责在她的个�
 3. 严格基于事实：绝不发散，绝不编造上述资料外的内容。如果访客问了资料中没有的细节（如具体薪资、未提及的公司），请礼貌回答："关于这部分的详细信息，建议您直接与Lavender本人沟通。"
 4. 精简有重点：回答控制在100-150字左右，挑最相关的核心成就回答，结尾可以自然地附上一句引导联系的话。`;
 
-export default async function handler(request) {
-  console.log('Received request to /api/chat:', request.method);
+export default function handler(req, res) {
+  console.log('Received request to /api/chat:', req.method);
   
-  if (request.method === 'OPTIONS') {
+  // Set CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS, GET');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Max-Age', '86400');
+  
+  if (req.method === 'OPTIONS') {
     console.log('Received OPTIONS request to /api/chat');
-    return new Response('', {
-      status: 204,
-      headers: CORS_HEADERS
-    });
+    res.status(204).end();
+    return;
   }
   
-  if (request.method === 'POST') {
+  if (req.method === 'POST') {
     try {
       const apiKey = process.env.DASHSCOPE_API_KEY;
       console.log('API Key configured:', !!apiKey);
       
       if (!apiKey) {
-        return new Response(JSON.stringify({ error: '未配置 DASHSCOPE_API_KEY 环境变量' }), {
-          status: 500,
-          headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' }
-        });
+        res.status(500).json({ error: '未配置 DASHSCOPE_API_KEY 环境变量' });
+        return;
       }
 
       let body = {};
       try {
-        const text = await request.text();
-        body = text ? JSON.parse(text) : {};
+        // For Vercel Node.js functions, req.body is already parsed
+        body = req.body || {};
       } catch (e) {
         console.error('Parse body error:', e);
       }
 
       const message = body.message || '';
       if (!message) {
-        return new Response(JSON.stringify({ error: '请提供消息内容' }), {
-          status: 400,
-          headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' }
-        });
+        res.status(400).json({ error: '请提供消息内容' });
+        return;
       }
 
       console.log('User message:', message);
@@ -79,55 +79,42 @@ export default async function handler(request) {
         temperature: 0.4
       };
 
-      const response = await fetch(
-        'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
-        {
-          method: 'POST',
-          headers: apiHeaders,
-          body: JSON.stringify(payload)
+      // Use axios or node-fetch for HTTP requests in Node.js
+      // Since we're using fetch, we need to make sure it's available
+      const fetch = require('node-fetch');
+      
+      fetch('https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions', {
+        method: 'POST',
+        headers: apiHeaders,
+        body: JSON.stringify(payload)
+      })
+      .then(response => {
+        console.log('DashScope response status:', response.status);
+        return response.json();
+      })
+      .then(data => {
+        console.log('DashScope response data:', JSON.stringify(data));
+
+        if (!data.choices || data.choices.length === 0) {
+          res.status(500).json({ error: '大模型API返回格式错误' });
+          return;
         }
-      );
 
-      console.log('DashScope response status:', response.status);
+        const botResponse = data.choices[0].message?.content || '抱歉，我暂时无法回答你的问题';
+        console.log('Bot response:', botResponse);
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('DashScope error:', errorText);
-        return new Response(JSON.stringify({ error: `大模型API调用失败: ${response.status} - ${errorText}` }), {
-          status: 500,
-          headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' }
-        });
-      }
-
-      const data = await response.json();
-      console.log('DashScope response data:', JSON.stringify(data));
-
-      if (!data.choices || data.choices.length === 0) {
-        return new Response(JSON.stringify({ error: '大模型API返回格式错误' }), {
-          status: 500,
-          headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' }
-        });
-      }
-
-      const botResponse = data.choices[0].message?.content || '抱歉，我暂时无法回答你的问题';
-      console.log('Bot response:', botResponse);
-
-      return new Response(JSON.stringify({ response: botResponse }), {
-        status: 200,
-        headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' }
+        res.status(200).json({ response: botResponse });
+      })
+      .catch(error => {
+        console.error('DashScope API error:', error);
+        res.status(500).json({ error: `大模型API调用失败: ${error.message}` });
       });
 
     } catch (error) {
       console.error('Server error:', error);
-      return new Response(JSON.stringify({ error: `服务器内部错误: ${error.message}` }), {
-        status: 500,
-        headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' }
-      });
+      res.status(500).json({ error: `服务器内部错误: ${error.message}` });
     }
+  } else {
+    res.status(405).send('Method not allowed');
   }
-  
-  return new Response('Method not allowed', {
-    status: 405,
-    headers: { ...CORS_HEADERS, 'Content-Type': 'text/plain' }
-  });
 }
