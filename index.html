@@ -745,6 +745,29 @@
             }
             .timeline-date::after { left: 0; right: auto; top: 4px; }
             .timeline-content { padding-left: 32px; width: 100%; }
+            
+            /* 修复移动端发送按钮换行问题 */
+            .chat-input {
+                gap: 8px;
+                padding: 12px 16px;
+            }
+            .chat-input input {
+                height: 40px;
+                font-size: 13px;
+            }
+            .chat-input button {
+                height: 40px;
+                padding: 0 16px;
+                font-size: 13px;
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+            
+            /* 修复移动端文字显示不全问题 */
+            .project-description {
+                -webkit-line-clamp: 5;
+                text-align: left;
+            }
         }
     </style>
 </head>
@@ -759,7 +782,7 @@
                     <div class="avatar-wrapper">
                         <div class="avatar-inner">
                             <!-- ⚠️ 请将这里的 src 替换为你保存的图片路径，比如 "avatar.png" -->
-                            <img src="avatar.png" alt="Lavender" class="avatar-image">
+                            <img src="https://fangke.ogmua.cn/fangke/20260324/1a814a0a8926c164722bcc587e882240.png" alt="Lavender" class="avatar-image">
                         </div>
                     </div>
                     <h1>你好，我是 Lavender</h1>
