@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/*",
+      "destination": "/cloud-functions/api/:splat"
+    }
+  ]
+}
