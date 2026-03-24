@@ -6,14 +6,14 @@
       "use": "@vercel/static"
     },
     {
-      "src": "node-functions/api/chat.js",
+      "src": "cloud-functions/api/chat.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/chat",
-      "dest": "/node-functions/api/chat.js"
+      "dest": "/cloud-functions/api/chat.js"
     },
     {
       "src": "/(.*)",
